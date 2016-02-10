@@ -2,12 +2,9 @@
   "name": "ServiceManagerCouch",
   "version": "0.0.1",
   "dependencies": {
-
+    "express": "^4.13.4",
+    "url": "^0.11.0"
   },
-  "devDependencies": {
-
-  },
-  "scripts": {
-
-  }
+  "devDependencies": {},
+  "scripts": {}
 }
