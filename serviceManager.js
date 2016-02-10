@@ -9,6 +9,10 @@ module.exports = ServiceManager;
 // declare names for helper function classes
 var GeneralUtil, RequestUtil, DatabaseUtil;
 
-function ServiceManager(configFiles){
-    
+function ServiceManager(configFile){
+
+    // load configuration
+    var ConfigManager = require("./configManager.js");
+    var configurer = new ConfigManager();
+    this.settings = configurer.loadConfigFileSync(configFile);
 }
