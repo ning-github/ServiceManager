@@ -41,3 +41,7 @@ ConfigManager.prototype.loadConfigFileSync = function(fileName){
 
     return null;
 };
+
+ConfigManager.prototype.get = function(){
+    return this.configData;
+};
