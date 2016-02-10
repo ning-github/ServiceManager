@@ -1,0 +1,25 @@
+// this follows the format of config.json except without the secret sauce
+
+{
+    "env": "dev",
+    "protocol": "http",
+    "request": {
+        "httpTimeout": 60000
+    },
+    "services": {
+        "port": "SECRETSAUCE",
+        "session": {
+            "secret": "SECRETSAUCE",
+            "cookie": {
+                "path": "SECRETSAUCE",
+                "httpOnly": "SECRETSAUCE"
+            },
+            "store": {
+                "host":     "SECRETSAUCE",
+                "bucket":   "SECRETSAUCE",
+                "password": "SECRETSAUCE",
+                "ttl": 86400
+            }
+        }
+    }
+}
