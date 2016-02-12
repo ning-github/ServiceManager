@@ -24,6 +24,11 @@ function ServiceManager(configFile){
     // set env
     global.ENV = this.options.env || "dev";
 
-    // set up and attach request request-handling utilities
+    /* set up and attach request request-handling utilities
+        (this way can extend to each service this instance will manage) */
     this.requestUtil = new RequestUtil();
+
+    // initialize empty objects where the managed services and routes will be populated
+    this.services = {};
+    this.routes = {};
 }
