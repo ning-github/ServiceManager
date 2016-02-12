@@ -10,9 +10,20 @@ module.exports = ServiceManager;
 var GeneralUtil, RequestUtil, DatabaseUtil;
 
 function ServiceManager(configFile){
+    // import utils
+    RequestUtil = require("./util.request.js")
 
     // load configuration
     var ConfigManager = require("./configManager.js");
     var configurer = new ConfigManager();
-    this.settings = configurer.loadConfigFileSync(configFile);
+    this.options = configurer.loadConfigFileSync(configFile);
+    // ensure that services and session settings are initialized
+    this.options.services = this.options.services || {};
+    this.options.services.session = this.options.services.session || {};
+
+    // set env
+    global.ENV = this.options.env || "dev";
+
+    // set up and attach request request-handling utilities
+    this.requestUtil = new RequestUtil();
 }
