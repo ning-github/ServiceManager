@@ -9,6 +9,10 @@ module.exports = ServiceManager;
 // declare names for helper function classes
 var GeneralUtil, RequestUtil, DatabaseUtil;
 
+
+//////////////
+//// Constructor
+/////////////
 function ServiceManager(configFile){
     // import utils
     RequestUtil = require("./util.request.js")
@@ -31,4 +35,12 @@ function ServiceManager(configFile){
     // initialize empty objects where the managed services and routes will be populated
     this.services = {};
     this.routes = {};
+}
+
+//////////////
+//// Create Express Server
+/////////////
+ServiceManager.prototype.createServer = function(server) {
+    // expects an express invokation to be passed in, but if not, it will do it
+    this.app = server || express();
 }
