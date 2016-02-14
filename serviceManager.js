@@ -44,3 +44,14 @@ ServiceManager.prototype.createServer = function(server) {
     // expects an express invokation to be passed in, but if not, it will do it
     this.app = server || express();
 }
+
+//////////////
+//// Set port, routes
+/////////////
+ServiceManager.prototype.setPort = function(port) {
+    this.options.services.port = port;
+}
+
+ServiceManager.prototype.setRoutes = function(routes) {
+    this.routes = routes;
+}
