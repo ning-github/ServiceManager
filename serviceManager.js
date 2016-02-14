@@ -55,3 +55,18 @@ ServiceManager.prototype.setPort = function(port) {
 ServiceManager.prototype.setRoutes = function(routes) {
     this.routes = routes;
 }
+
+//////////////
+//// Add service method that will be used to grow more services to the back end
+/////////////
+ServiceManager.prototype.addService = function(library) {
+    /*
+        "Email" : {
+            lib: *{library of email service}*
+        }
+    }
+    */
+    this.services[library.serviceName] = {
+        lib: library
+    }
+}
