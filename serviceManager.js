@@ -70,3 +70,14 @@ ServiceManager.prototype.addService = function(library) {
         lib: library
     }
 }
+
+//////////////
+//// Methods to get the service property, or that property's actual service object
+/////////////
+ServiceManager.prototype.getService = function(serviceName) {
+    return this.services[serviceName].service;
+}
+
+ServiceManager.prototype.get = function(serviceName) {
+    return this.services[serviceName];
+}
