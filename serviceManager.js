@@ -41,7 +41,7 @@ function ServiceManager(configFile){
 //////////////
 //// Create Express Server
 /////////////
-ServiceManager.prototype.createServer = function(server) {
+ServiceManager.prototype.createExpressServer = function(server) {
     // expects an express invokation to be passed in, but if not, it will do it
     this.app = server || express();
 }
@@ -113,4 +113,8 @@ ServiceManager.prototype.initializeServices = function() {
 
 //////////////
 //// Set up the routes, using the added services
+/////////////
+
+//////////////
+//// actually create the http server and listen on the previosuly provided port
 /////////////
