@@ -17,5 +17,5 @@ serviceManager.setPort(7002);
 serviceManager.setRoutes(Routes);
 
 // add services
-
+serviceManager.addService(Search);
 // START the server
