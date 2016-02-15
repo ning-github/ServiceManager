@@ -13,6 +13,8 @@ var Routes = require("./routes.js");
 var serviceManager = new ServiceManager("./config.json");
 // create the actual express server
 // set port and routes
+serviceManager.setPort(7002);
+serviceManager.setRoutes(Routes);
 
 // add services
 
