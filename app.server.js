@@ -8,3 +8,8 @@ var Search = require("./services/search/search.js");
 
 // import API routes
 var Routes = require("./routes.js");
+
+//// begin ////
+
+// instantiate service manager, passing in config file
+var serviceManager = new ServiceManager("./config.json");
