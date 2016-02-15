@@ -3,6 +3,7 @@ var https   = require("https");
 var url     = require("url");
 var express = require("express");
 var Promise = require("bluebird");
+var _       = require("lodash");
 
 // module export for use in app.server.js
 module.exports = ServiceManager;
@@ -54,6 +55,7 @@ ServiceManager.prototype.setPort = function(port) {
 }
 
 ServiceManager.prototype.setRoutes = function(routes) {
+    // put them in routes map to later configure into this.routes property
     this.routesMap = routes;
 }
 
@@ -112,8 +114,68 @@ ServiceManager.prototype.initializeServices = function() {
 };
 
 //////////////
-//// Set up the routes, using the added services
+//// Configure the routes, using the added services
 /////////////
+
+ServiceManager.prototype.configureRoutes = function () {
+    // the purpose of this method is:
+    //       POPULATE this.routes USING this.routesMap AND INITIALIZED SERVICES
+
+    // loop through routes map
+    _.forEach(this.routesMap, function(route){
+        /*
+            recall that each route looks like:
+
+            {
+                api: "/api/helloWorld",         // endpoint
+                service: "search",              // service it belongs to
+                controller: "search",           // the controller in that service
+                method: {
+                    get: {                      // type of request
+                        func: "getHelloWorld"   // name of controller function
+                    }
+                }
+            }
+
+            that each this.services.lib looks like:
+
+            {
+                name: "search",
+                // the actual service file itself
+                Service:    require("./search.service.js"),
+                // constants
+                const:      require("./search.const.js"),
+                // controllers
+                controller: {
+                    search: require("./controller/search.controller.js")
+                }
+            }
+
+        */
+        var service = this.services[route.service].service;
+        var controllers = this.services[route.service].lib.controller;
+
+        var controller = controllers[route.controller];
+
+        // SAVE the whole route in the routes object with unique key as its endpoint
+        this.routes[route.api] = {
+            source = route
+        };
+
+        // then have to address each method in that route (get, post, etc)
+        _.forEach(route.method, function(method, verb){
+            // get the actual function using the string name as a key
+            var func = controller[method.func];
+
+            // save that function to this.routes using the REST verb as a key
+            this.routes[route.api][verb] = {
+                service: service,
+                func: func
+            }
+        }.bind(this));
+    }.bind(this));
+};
+
 
 //////////////
 //// actually create the http server and listen on the previosuly provided port
