@@ -24,6 +24,12 @@ function SearchService(options, serviceManager) {
         !!!!
 
         */
+
+        // important for pseudoclassical instantiation
+        this.options = options || {};
+        // include the service manager for use throughout the service
+		this.serviceManager = serviceManager;
+        this.requestUtil = this.serviceManager.requestUtil;
     }
     catch(err) {
         // if something goes wrong during the hooking up of the service's data modules
@@ -52,6 +58,6 @@ SearchService.prototype.start = function(){
             .then(resolve, reject);
 
         */
-        resolve():
+        resolve();
     }).bind(this);
 }
