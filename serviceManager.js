@@ -159,7 +159,7 @@ ServiceManager.prototype.configureRoutes = function () {
 
         // SAVE the whole route in the routes object with unique key as its endpoint
         this.routes[route.api] = {
-            source = route
+            source: route
         };
 
         // then have to address each method in that route (get, post, etc)
@@ -185,7 +185,29 @@ ServiceManager.prototype.setupRoutes = function () {
         res.status(200).send("I am healthy");
     });
 
-    
+    // for each route that has been configured
+    _.forEach(this.routes, function(route, apiEndpoint){
+        // get the source
+        var source = route.source;
+
+        // for each method in that source (belonging to that endpoint)
+        _.forEach(source.method, function(methodObj, verb){
+            // get the service and the controller function itself
+            var service = route[verb].service;
+            var func = route[verb].func;
+
+            /////////////
+            //// ACTUAL route set up
+            /////////////
+
+            // this.app["get"]("/api/hello", ) is like this.app.get("/api/hello")
+            this.app[verb](apiEndpoint, function(req, res, next){
+                // call the controller function with the context of the service (it can use its utilities and such that way)
+                func.call(service, req, res, next);
+            });
+
+        }.bind(this));
+    }.bind(this));
 };
 
 //////////////
