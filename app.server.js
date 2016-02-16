@@ -19,4 +19,10 @@ serviceManager.setRoutes(Routes);
 
 // add services
 serviceManager.addService(Search);
-// START the server
+
+// START the server setup
+serviceManager.start()
+    .then(function(){
+        // then create the server and start listening for requests
+        serviceManager.createHttpServerAndListen():
+    });
