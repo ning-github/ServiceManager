@@ -221,3 +221,34 @@ ServiceManager.prototype.createHttpServerAndListen = function () {
         })
     }.bind(this));
 };
+
+//////////////
+//// Start setup in order
+/////////////
+ServiceManager.prototype.start = function () {
+    return new Promise(function(resolve, reject){
+        this.initServices()
+            .then(function(){
+                // in here, call the start function of each service
+                var promiseCollection = [];
+                for (var serviceName in this.services) {
+                    promiseCollection.push(this.services[serviceName].service.start(this));
+                }
+                return Promise.all(promiseCollection);
+            }.bind(this))
+            .then(function(){
+                // configure routes
+                return this.configureRoutes();
+            }.bind(this))
+            .then(function(){
+                // set up routes
+                this.setupRoutes();
+                // route set up is NOT async
+                resolve();
+            }.bind(this))
+            .catch(function(err){
+                console.trace("failed during start --", err);
+                reject(err):
+            });
+    }.bind(this));
+};
