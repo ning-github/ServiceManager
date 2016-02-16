@@ -176,6 +176,17 @@ ServiceManager.prototype.configureRoutes = function () {
     }.bind(this));
 };
 
+//////////////
+//// Set up routes from this.routes
+/////////////
+ServiceManager.prototype.setupRoutes = function () {
+    // set a health-check route
+    this.app.use("/health-check", function(req, res, next){
+        res.status(200).send("I am healthy");
+    });
+
+    
+};
 
 //////////////
 //// actually create the http server and listen on the previosuly provided port
