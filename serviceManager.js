@@ -69,7 +69,7 @@ ServiceManager.prototype.addService = function(library) {
         }
     }
     */
-    this.services[library.serviceName] = {
+    this.services[library.name] = {
         lib: library
     }
 }
@@ -94,7 +94,7 @@ ServiceManager.prototype.initializeServices = function() {
             // call service constructor to initialize that service
                 // note how Service is captilized since is constructor
                 // note that the servive manager is passing itself in as the second arg
-            var service = this.services[serviceName].lib.Service(this.options, this);
+            var service = new this.services[serviceName].lib.Service(this.options, this);
             // save itself as the service property of the existing servive object
             this.services[serviceName].service = service;
             /*
@@ -203,7 +203,6 @@ ServiceManager.prototype.setupRoutes = function () {
             // this.app["get"]("/api/hello", ) is like this.app.get("/api/hello")
             this.app[verb](apiEndpoint, function(req, res, next){
                 // call the controller function with the context of the service (it can use its utilities and such that way)
-                func.call(service, req, res, next);
             });
 
         }.bind(this));
@@ -218,7 +217,7 @@ ServiceManager.prototype.createHttpServerAndListen = function () {
         http.createServer(this.app).listen(this.options.services.port, function(){
             console.log("server created and listening on port  ", this.options.services.port);
             resolve();
-        })
+        }.bind(this));
     }.bind(this));
 };
 
@@ -227,7 +226,7 @@ ServiceManager.prototype.createHttpServerAndListen = function () {
 /////////////
 ServiceManager.prototype.start = function () {
     return new Promise(function(resolve, reject){
-        this.initServices()
+        this.initializeServices()
             .then(function(){
                 // in here, call the start function of each service
                 var promiseCollection = [];
@@ -248,7 +247,7 @@ ServiceManager.prototype.start = function () {
             }.bind(this))
             .catch(function(err){
                 console.trace("failed during start --", err);
-                reject(err):
+                reject(err);
             });
     }.bind(this));
 };

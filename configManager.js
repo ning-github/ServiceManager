@@ -1,7 +1,7 @@
 // loads and parses configuration file that configures server
 
 var fs  = require("fs");
-var +   = require("lodash");
+var _   = require("lodash");
 
 // export function for setting up service manager, which will set up server
 module.exports = ConfigManager;
@@ -36,7 +36,7 @@ ConfigManager.prototype.loadConfigFileSync = function(fileName){
             return this.configData;
         }
     } catch(err) {
-        console.trace("ConfigManager: an error occurred loading config file "fileName"", err);
+        console.trace("ConfigManager: an error occurred loading config file ", filename, err);
     }
 
     return null;

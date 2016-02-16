@@ -24,5 +24,5 @@ serviceManager.addService(Search);
 serviceManager.start()
     .then(function(){
         // then create the server and start listening for requests
-        serviceManager.createHttpServerAndListen():
+        serviceManager.createHttpServerAndListen();
     });

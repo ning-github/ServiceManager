@@ -1,4 +1,4 @@
-var routes = {
+var routes = [
     {
         api: "/api/helloWorld",         // endpoint
         service: "search",              // service it belongs to
@@ -9,7 +9,7 @@ var routes = {
             }
         }
     }
-};
+];
 
 
 module.exports = routes;
