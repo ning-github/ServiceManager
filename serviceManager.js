@@ -213,3 +213,11 @@ ServiceManager.prototype.setupRoutes = function () {
 //////////////
 //// actually create the http server and listen on the previosuly provided port
 /////////////
+ServiceManager.prototype.createHttpServerAndListen = function () {
+    return new Promise(function(resolve, reject){
+        http.createServer(this.app).listen(this.options.services.port, function(){
+            console.log("server created and listening on port  ", this.options.services.port);
+            resolve();
+        })
+    }.bind(this));
+};
